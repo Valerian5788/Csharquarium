@@ -86,7 +86,7 @@ namespace Csharquarium.Classes
                                 {
                                     if (p is IMonosexue mono)
                                     {
-                                        Poisson np = mono.SeReproduire(p, cible);
+                                        Poisson np = p.SeReproduire(p, cible);
                                         np.IsOccuped = true;
                                         p.IsOccuped = true;
                                         cible.IsOccuped = true;
@@ -209,7 +209,7 @@ namespace Csharquarium.Classes
                                     {
                                         hermaopport.ChangerSexe(p);
                                     }
-                                    Poisson np = hermaopport.SeReproduire(p, cible);
+                                    Poisson np = p.SeReproduire(p, cible);
                                     np.IsOccuped = true;
                                     p.IsOccuped = true;
                                     cible.IsOccuped = true;
