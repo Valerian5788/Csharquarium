@@ -1,0 +1,15 @@
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.csproj.AssemblyReference.cache
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.AssemblyInfoInputs.cache
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.AssemblyInfo.cs
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.csproj.CoreCompileInputs.cache
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\bin\Debug\net6.0\Csharquarium.exe
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\bin\Debug\net6.0\Csharquarium.deps.json
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\bin\Debug\net6.0\Csharquarium.runtimeconfig.json
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\bin\Debug\net6.0\Csharquarium.dll
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\bin\Debug\net6.0\Csharquarium.pdb
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.dll
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\refint\Csharquarium.dll
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.pdb
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\Csharquarium.genruntimeconfig.cache
+C:\Users\v.vandercamme\Documents\c#\OO\Csharquarium\Csharquarium\obj\Debug\net6.0\ref\Csharquarium.dll

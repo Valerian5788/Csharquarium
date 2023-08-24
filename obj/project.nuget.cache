@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "l79eBRqBJkURd/pIR6OyJ6cGKrLgzg74fgJ5yEs11PeNQ6ffCu093s1hs9sJK284ZeQttpRICgV3teOM75vjng==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\v.vandercamme\\Documents\\c#\\OO\\Csharquarium\\Csharquarium\\Csharquarium.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\v.vandercamme\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.20\\microsoft.windowsdesktop.app.ref.6.0.20.nupkg.sha512",
+    "C:\\Users\\v.vandercamme\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.20\\microsoft.netcore.app.ref.6.0.20.nupkg.sha512",
+    "C:\\Users\\v.vandercamme\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.20\\microsoft.aspnetcore.app.ref.6.0.20.nupkg.sha512",
+    "C:\\Users\\v.vandercamme\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.20\\microsoft.netcore.app.host.win-x64.6.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}
