@@ -55,5 +55,36 @@ namespace Csharquarium.Classes
             Console.WriteLine($"Le miracle de la vie ! {homme.Name} et {femme.Name} ont eu un enfant : {name}");
             return newPoisson; // Retourner le nouveau poisson créé
         }
+        public void Manger(Poisson repas, List<Poisson> poissons)
+        {
+            // Le mérou mange un autre poisson
+            Console.WriteLine($"{Name} a croqué {repas.Name}.");
+            repas.Pv -= 4; // Réduire les points de vie du poisson repas
+            Pv += 4; // Augmenter les points de vie du mérou
+            if (repas.Pv <= 0)
+            {
+                poissons.Remove(repas);
+                Console.WriteLine($"{repas.Name} à été mangé. RIP.");
+            }
+        }
+        public void Manger(Poisson poisson, Algues repas, List<Algues> algues)
+        {
+            // Le poisson mange une algue
+            Console.WriteLine($"{poisson.Name} a croqué une algue.");
+            repas.Pv -= 2; // Réduire les points de vie de l'algue
+            Pv += 3; // Augmenter les points de vie du poisson
+            if (repas.Pv <= 0 || algues.Count >= 0)
+            {
+                algues.Remove(repas);
+                Console.WriteLine($"Une algue à été mangée");
+            }
+            else
+            {
+                Console.WriteLine("Plus aucune algue dans l'aquarium, rajoutez en svp :");
+                string input = Console.ReadLine();
+                int.TryParse(input, out int i);
+                AddAlgues(i);
+            }
+        }
     }
 }

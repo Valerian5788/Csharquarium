@@ -20,5 +20,10 @@ namespace Csharquarium.Classes
                 algues.Remove(algue);
                 Console.WriteLine($"Ironie du sort, une Algue vient de mourir de vieillesse");
         }
+        public void MourirAlgueMange(Algues algue, List<Algues> algues)
+        {
+            algues.Remove(algue);
+            Console.WriteLine($"Ironie du sort, une Algue vient de se faire manger");
+        }
     }
 }

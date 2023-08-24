@@ -31,15 +31,6 @@ namespace Csharquarium.Classes.Races
         }
 
         // Implémentation de la méthode Manger de l'interface ICarnivore
-        public void Manger(Poisson repas)
-        {
-            // Le poisson clown mange un autre poisson
-            Console.WriteLine($"{Name} a croqué {repas.Name}.");
-            repas.Pv -= 4; // Réduire les points de vie du poisson repas
-            Pv += 4; // Augmenter les points de vie du poisson clown
-        }
-
-
     }
 
 

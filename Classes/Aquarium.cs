@@ -63,11 +63,14 @@ namespace Csharquarium.Classes
             for ( int i = 0; i < poissons.Count; i++)
             {
                 Poisson p = poissons[i];
+                if (p.age >= 20)
+                {
+                    p.MourirPoisson(p, poissons);
+                }
                 if (p is IHerbivore herb && algues.Count >= 0)
                 {
                     if (p.Pv > 5)
                     {
-                        Console.WriteLine($"Le poisson {p.Name} n'a pas faim");
                         if (p.IsOccuped == false)
                         {
                             Poisson cible = poissons[RNG.Next(poissons.Count)];
@@ -133,25 +136,14 @@ namespace Csharquarium.Classes
                     else
                     {
                         Algues repas = algues[RNG.Next(algues.Count)];
-                        herb.Manger(repas);
-                        if (repas.Pv <= 0 && algues.Count >= 0)
-                        {
-                            algues.Remove(repas);
-                            Console.WriteLine($"Une algue à été mangée");
-                        }else
-                        {
-                            Console.WriteLine("Plus aucune algue dans l'aquarium, rajoutez en svp :");
-                            string input = Console.ReadLine();
-                            int.TryParse(input, out i);
-                            AddAlgues(i);
-                        }
+                        p.Manger(p,repas,algues);
                     }
                 }
                 else if (p is ICarnivore carn)
                 {
                     if (p.Pv > 5)
                     {
-                        Console.WriteLine($"Le poisson {p.Name} n'a pas faim");
+  
                         if (p.IsOccuped == false)
                         {
                         Poisson cible = poissons[RNG.Next(poissons.Count)];
@@ -226,24 +218,11 @@ namespace Csharquarium.Classes
                             {
                                 repas = poissons[RNG.Next(poissons.Count)];
                             }
-                            carn.Manger(repas);
-                            if (repas.Pv <= 0)
-                            {
-                                poissons.Remove(repas);
-                                Console.WriteLine($"{repas.Name} à été mangé. RIP.");
-                            }
+                            p.Manger(repas, poissons);
                             poissons.Add(p);                          
                     }
                 }
 
-            }
-            for (int i = poissons.Count - 1; i >= 0; i--)
-            {
-                Poisson poisson = poissons[i];
-                if (poisson.age == 20)
-                {
-                    poisson.MourirPoisson(poisson, poissons);
-                }
             }
             for (int i = algues.Count - 1; i >= 0; i--)
             {

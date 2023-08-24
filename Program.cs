@@ -1,6 +1,7 @@
 ﻿using Csharquarium.Classes;
 using Csharquarium.Classes.Races;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 internal class Program
 {
@@ -29,7 +30,7 @@ internal class Program
         aq.AddAlgues(5);
 
         // Fait passer du temps dans l'aquarium
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 22; i++)
         {
             string input = "";
             do
@@ -45,6 +46,7 @@ internal class Program
             }
         }
     }
+}
         // Demande à l'utilisateur de choisir trois poissons et les ajoute à l'aquarium
         /* Poisson p1 = ChoixPoisson();
          Poisson p2 = ChoixPoisson();
@@ -113,4 +115,4 @@ internal class Program
         }
     }*/
 
-}
+
