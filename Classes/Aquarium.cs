@@ -50,9 +50,7 @@ namespace Csharquarium.Classes
                 };
             }
         }
-
-        // Méthode pour faire passer du temps dans l'aquarium et afficher son état
-        public void FairePasserTemps()
+        public void AfficherÉtat()
         {
             OnMessage?.Invoke($"Nombre d'algues dans l'aquarium : {algues.Count}");
             foreach (Algues algue in algues)
@@ -64,6 +62,13 @@ namespace Csharquarium.Classes
             {
                 OnMessage?.Invoke($"{poisson.Name} de sexe {poisson.GetSexe()}, de race {poisson.Race} avec {poisson.Pv} PV est présent dans l'aquarium");
             }
+
+            Console.ReadKey();
+        }
+
+        // Méthode pour faire passer du temps dans l'aquarium
+        public void FairePasserTemps()
+        {
             foreach (Algues algue in algues)
             {
                 algue.Pv += 1;
@@ -204,11 +209,6 @@ namespace Csharquarium.Classes
                             }
                             else if (p is IHermaOpport hermaopport)
                             {
-                                //if (p.IsMale == cible.IsMale)
-                                //{
-                                //    hermaopport.ChangerSexe(p);
-                                //}
-
                                 List<Poisson> temp = new List<Poisson>();
                                 while (temp.Count < poissons.Count && (p.Race != cible.Race ||  p.Name == cible.Name))
                                 {
@@ -260,6 +260,7 @@ namespace Csharquarium.Classes
                     algues.Add(newAlgue);
                 }
             }
+            Console.ReadKey();
         }
     }
 
