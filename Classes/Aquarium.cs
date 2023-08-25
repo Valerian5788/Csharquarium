@@ -11,6 +11,8 @@ namespace Csharquarium.Classes
     {
         private static Random RNG = new Random();
 
+        public event Action<string> OnMessage;
+
         public List<Poisson> poissons = new List<Poisson>(); // Liste de poissons dans l'aquarium
         public List<Algues> algues = new List<Algues>(); // Liste d'algues dans l'aquarium
 
@@ -28,13 +30,18 @@ namespace Csharquarium.Classes
                 // Créer une nouvelle algue et l'ajouter à la liste des algues
                 Algues nouvelleAlgue = new Algues();
                 algues.Add(nouvelleAlgue);
+                nouvelleAlgue.PvSurveillance += (int pv) =>
+                {
+                    algues.Remove(nouvelleAlgue);
+                    OnMessage?.Invoke($"L'algue est morte, elle a {pv} PV");
+                };
             }
         }
 
         // Méthode pour faire passer du temps dans l'aquarium et afficher son état
         public void FairePasserTemps()
         {
-            Console.WriteLine($"Nombre d'algues dans l'aquarium : {algues.Count}");
+            OnMessage?.Invoke($"Nombre d'algues dans l'aquarium : {algues.Count}");
             foreach (Algues algue in algues)
             {
                 Console.WriteLine($"Algue avec {algue.Pv}");

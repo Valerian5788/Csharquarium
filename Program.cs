@@ -9,8 +9,9 @@ internal class Program
     {
         // Création d'un nouvel aquarium
         Aquarium aq = new Aquarium();
+        aq.OnMessage += Console.WriteLine;
         Algues algue = new Algues();
-
+        EtresVivant vivant = new EtresVivant();
         Poisson p1 = new PoissonClown("Nemo", true);
         Poisson p2 = new PoissonClown("Nema", false);
         Poisson p3 = new Sole("Neme", false);
@@ -44,6 +45,10 @@ internal class Program
             {
                 break;
             }
+        }
+        static void MortPoisson(Poisson poisson)
+        {
+            Console.WriteLine($"Le poisson {poisson.Name} à atteint l'age de 20 ans, il meurt"); 
         }
     }
 }
