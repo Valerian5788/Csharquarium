@@ -17,22 +17,6 @@ namespace Csharquarium.Classes.Races
             // Aucune autre initialisation requise pour le moment
         }
 
-        // Méthode pour changer le sexe du poisson basée sur l'âge
-        public void ChangerSexe(Poisson poisson)
-        {
-            // Inversion simple du sexe
-            if (poisson.IsMale)
-            {
-                poisson.IsMale = false;
-            }
-            else
-            {
-                poisson.IsMale = true;
-            }
-        }
-
-        // Implémentation de la méthode Manger de l'interface ICarnivore
-
     }
 
 

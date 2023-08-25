@@ -24,6 +24,10 @@ namespace Csharquarium.Classes
             {
                 OnMessage?.Invoke($"Le poisson{nouveauPoisson.Name} est mort de vieillesse");
             };
+            nouveauPoisson.MessageSUrveillance += (string message) =>
+            {
+                OnMessage?.Invoke(message);
+            };
         }
 
         // Méthode pour ajouter des algues à l'aquarium

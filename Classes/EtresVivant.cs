@@ -10,6 +10,7 @@ namespace Csharquarium.Classes
     {
         public event Action<int> AgeSurveillance;
         public event Action<int> PvSurveillance;
+        public event Action<string> MessageSUrveillance;
 
         private int _pv = 10;
         public int Pv 
@@ -53,5 +54,10 @@ namespace Csharquarium.Classes
         //{
         //    AgeSurveillance.Invoke($"Le poisson {poisson.Name} à atteint l'age de 20 ans, il meurt");
         //}
+
+        protected void RaiseMessageSurveillance(string message)
+        {
+            MessageSUrveillance?.Invoke(message);
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace Csharquarium.Classes
         // Propriété pour stocker la race du poisson
         public string Race { get; set; }
 
+        public Poisson() { }
         // Constructeur de la classe Poisson
         public Poisson(string name, bool isMale)
         {
@@ -52,27 +53,40 @@ namespace Csharquarium.Classes
             parameters[0] = name;
             parameters[1] = sexe;
             Poisson newPoisson = (Poisson) homme.GetType().GetConstructors().First().Invoke(parameters);
-            Console.WriteLine($"Le miracle de la vie ! {homme.Name} et {femme.Name} ont eu un enfant : {name}");
+            RaiseMessageSurveillance($"Le miracle de la vie ! {homme.Name} et {femme.Name} ont eu un enfant : {name}");
             return newPoisson; // Retourner le nouveau poisson créé
         }
         public void Manger(Poisson repas, List<Poisson> poissons)
         {
             // Le mérou mange un autre poisson
-            Console.WriteLine($"{Name} a croqué {repas.Name}.");
+            RaiseMessageSurveillance($"{Name} a croqué {repas.Name}");
             repas.Pv -= 4; // Réduire les points de vie du poisson repas
             Pv += 4; // Augmenter les points de vie du mérou
             if (repas.Pv <= 0)
             {
                 poissons.Remove(repas);
-                Console.WriteLine($"{repas.Name} à été mangé. RIP.");
+                RaiseMessageSurveillance($"{repas.Name} à été mangé. RIP.");
             }
         }
         public void Manger(Poisson poisson, Algues repas, List<Algues> algues)
         {
             // Le poisson mange une algue
-            Console.WriteLine($"{poisson.Name} a croqué une algue.");
+            RaiseMessageSurveillance($"{poisson.Name} a croqué une algue.");
             repas.Pv -= 2; // Réduire les points de vie de l'algue
             Pv += 3; // Augmenter les points de vie du poisson
+        }
+        // Méthode pour changer le sexe du poisson
+        public void ChangerSexe(Poisson poisson)
+        {
+            // Inversion simple du sexe
+            if (poisson.IsMale)
+            {
+                poisson.IsMale = false;
+            }
+            else
+            {
+                poisson.IsMale = true;
+            }
         }
     }
 }
