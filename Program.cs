@@ -34,14 +34,13 @@ internal class Program
         for (int i = 0; i < 22; i++)
         {
             string input = "";
-            do
+            Console.WriteLine($"Voulez vous faire un tour ? O pour oui, N pour non, {i}");
+            input = Console.ReadLine();
+            if (input == "O" || input == "o" || input == "0")
             {
-                Console.WriteLine("Voulez vous faire un tour ? O pour oui, N pour non");
-                input = Console.ReadLine();
                 aq.FairePasserTemps();
-
-            } while (input == "O");
-            if (input == "N")
+            }
+            else if (input == "N" || input =="n")
             {
                 break;
             }

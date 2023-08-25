@@ -89,7 +89,7 @@ namespace Csharquarium.Classes
                             if (p is IMonosexue || p is IHermaAge)
                             {
                                 List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && (p.Race != cible.Race || p.Name == cible.Name || p.IsMale == cible.IsMale))
+                                while (temp.Count < poissons.Count && (p.Race != cible.Race || p.Name == cible.Name || p.IsMale == cible.IsMale || cible.IsOccuped == true))
                                 {
                                     cible = poissons[RNG.Next(poissons.Count)];
                                     if(!temp.Contains(cible))
@@ -120,7 +120,7 @@ namespace Csharquarium.Classes
                             else if (p is IHermaOpport hermaopport)
                             {
                                 List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && (p.Race != cible.Race || p.Name == cible.Name))
+                                while (temp.Count < poissons.Count && (p.Race != cible.Race || p.Name == cible.Name || cible.IsOccuped == true))
                                 {
                                     cible = poissons[RNG.Next(poissons.Count)];
                                     if (!temp.Contains(cible))
