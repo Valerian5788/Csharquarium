@@ -46,10 +46,6 @@ internal class Program
                 break;
             }
         }
-        static void MortPoisson(Poisson poisson)
-        {
-            Console.WriteLine($"Le poisson {poisson.Name} à atteint l'age de 20 ans, il meurt"); 
-        }
     }
 }
         // Demande à l'utilisateur de choisir trois poissons et les ajoute à l'aquarium

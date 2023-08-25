@@ -20,6 +20,10 @@ namespace Csharquarium.Classes
         public void AddFish(Poisson nouveauPoisson)
         {
             poissons.Add(nouveauPoisson); // Ajoute le poisson à la liste de poissons
+            nouveauPoisson.AgeSurveillance += (int age) =>
+            {
+                OnMessage?.Invoke($"Le poisson{nouveauPoisson.Name} est mort de vieillesse");
+            };
         }
 
         // Méthode pour ajouter des algues à l'aquarium
@@ -35,6 +39,11 @@ namespace Csharquarium.Classes
                     algues.Remove(nouvelleAlgue);
                     OnMessage?.Invoke($"L'algue est morte, elle a {pv} PV");
                 };
+                nouvelleAlgue.AgeSurveillance += (int pv) =>
+                {
+                    algues.Remove(nouvelleAlgue);
+                    OnMessage?.Invoke($"Une algue à atteint l'age de 20 tours, elle meurt paisiblement");
+                };
             }
         }
 
@@ -44,12 +53,12 @@ namespace Csharquarium.Classes
             OnMessage?.Invoke($"Nombre d'algues dans l'aquarium : {algues.Count}");
             foreach (Algues algue in algues)
             {
-                Console.WriteLine($"Algue avec {algue.Pv}");
+                OnMessage?.Invoke($"Algue avec {algue.Pv}");
             }
 
             foreach (Poisson poisson in poissons)
             {
-                Console.WriteLine($"{poisson.Name} de sexe {poisson.GetSexe()}, de race {poisson.Race} avec {poisson.Pv} PV est présent dans l'aquarium");
+                OnMessage?.Invoke($"{poisson.Name} de sexe {poisson.GetSexe()}, de race {poisson.Race} avec {poisson.Pv} PV est présent dans l'aquarium");
             }
             foreach (Algues algue in algues)
             {
@@ -70,10 +79,6 @@ namespace Csharquarium.Classes
             for ( int i = 0; i < poissons.Count; i++)
             {
                 Poisson p = poissons[i];
-                if (p.age >= 20)
-                {
-                    p.MourirPoisson(p, poissons);
-                }
                 if (p is IHerbivore herb && algues.Count >= 0)
                 {
                     if (p.Pv > 5)
@@ -143,6 +148,13 @@ namespace Csharquarium.Classes
                     else
                     {
                         Algues repas = algues[RNG.Next(algues.Count)];
+                        if (algues.Count <= 0)
+                        {
+                            Console.WriteLine("Plus aucune algue dans l'aquarium, rajoutez en svp :");
+                            string input = Console.ReadLine();
+                            int.TryParse(input, out int o);
+                            AddAlgues(o);
+                        }
                         p.Manger(p,repas,algues);
                     }
                 }
@@ -234,10 +246,6 @@ namespace Csharquarium.Classes
             for (int i = algues.Count - 1; i >= 0; i--)
             {
                 Algues algue = algues[i];
-                if (algue.age == 20)
-                {
-                    algue.MourirAlgue(algue, algues);
-                }
                 if (algue.Pv >= 10 && algue.Reproduction == false)
                 {
                     Algues newAlgue = new Algues();

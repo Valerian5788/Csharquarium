@@ -8,7 +8,7 @@ namespace Csharquarium.Classes
 {
     internal class EtresVivant
     {
-        public event Action<string> AgeSurveillance;
+        public event Action<int> AgeSurveillance;
         public event Action<int> PvSurveillance;
 
         private int _pv = 10;
@@ -24,7 +24,16 @@ namespace Csharquarium.Classes
                 }
             } 
         }
-        public int age = 0;
+        private int _age = 0;
+        public int age
+        {
+            get { return _age; }
+            set
+            {
+                _age = value;
+                if (age >= 20) { AgeSurveillance?.Invoke(_age); }
+            }
+        }
         //protected void MourirPoisson(Poisson poisson, List<Poisson> poissons)
         //{
         //       poissons.Remove(poisson);

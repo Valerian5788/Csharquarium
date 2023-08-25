@@ -73,18 +73,6 @@ namespace Csharquarium.Classes
             Console.WriteLine($"{poisson.Name} a croqué une algue.");
             repas.Pv -= 2; // Réduire les points de vie de l'algue
             Pv += 3; // Augmenter les points de vie du poisson
-            if (repas.Pv <= 0 || algues.Count >= 0)
-            {
-                algues.Remove(repas);
-                Console.WriteLine($"Une algue à été mangée");
-            }
-            else
-            {
-                Console.WriteLine("Plus aucune algue dans l'aquarium, rajoutez en svp :");
-                string input = Console.ReadLine();
-                int.TryParse(input, out int i);
-                AddAlgues(i);
-            }
         }
     }
 }
