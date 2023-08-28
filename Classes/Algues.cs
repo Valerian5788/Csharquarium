@@ -10,6 +10,5 @@ namespace Csharquarium.Classes
     internal class Algues : EtresVivant
     {
         public bool Reproduction;
-        
     }
 }

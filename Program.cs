@@ -20,6 +20,7 @@ internal class Program
         {
             showMenu = MainMenu();
         }
+
         // Création d'un nouvel aquarium
         //Poisson p1 = new PoissonClown("Nemo", true);
         //Poisson p2 = new PoissonClown("Nema", false);
@@ -64,7 +65,8 @@ internal class Program
         Console.WriteLine("2) Passer un tour");
         Console.WriteLine("3) Ajouter un poisson");
         Console.WriteLine("4) Ajouter une algues");
-        Console.WriteLine("5) Exit");
+        Console.WriteLine("5) Enregistrer les données");
+        Console.WriteLine("6) Exit");
         Console.Write("\r\nchoisissez une option: ");
         //string input = Console.ReadLine();
         //int.TryParse(input, out int i);
@@ -90,6 +92,9 @@ internal class Program
                 aq.AddAlgues(result);
                 return true;
             case "5":
+                aq.EnregistrerData();
+                return true;
+            case "6":
                 return false;
             default:
                 return true;
@@ -148,6 +153,7 @@ internal class Program
         //    return new Thon(name, sexe);
         //}
     }
+    
 }
         // Demande à l'utilisateur de choisir trois poissons et les ajoute à l'aquarium
         /* Poisson p1 = ChoixPoisson();

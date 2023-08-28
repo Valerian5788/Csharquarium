@@ -70,6 +70,10 @@ namespace Csharquarium.Classes
         // Méthode pour faire passer du temps dans l'aquarium
         public void FairePasserTemps()
         {
+            int tour = 0;
+            tour++;
+            OnMessage?.Invoke($"Nombre de tours = {tour}");
+
             foreach (Algues algue in algues)
             {
                 algue.Pv += 1;
@@ -160,7 +164,7 @@ namespace Csharquarium.Classes
                         Algues repas = algues[RNG.Next(algues.Count)];
                         if (algues.Count <= 0)
                         {
-                            Console.WriteLine("Plus aucune algue dans l'aquarium, rajoutez en svp :");
+                            OnMessage?.Invoke("Plus aucune algue dans l'aquarium, rajoutez en svp :");
                             string input = Console.ReadLine();
                             int.TryParse(input, out int o);
                             AddAlgues(o);
@@ -263,6 +267,47 @@ namespace Csharquarium.Classes
             }
             Console.ReadKey();
         }
+        public void EnregistrerData()
+        {
+            List<string> data = new List<string>();
+            foreach (Poisson poisson in poissons)
+            {
+                string race = poisson.Race;
+                string nom = poisson.Name;
+                string sexe = poisson.GetSexe();
+                string pv = poisson.Pv.ToString();
+                string age = poisson.age.ToString(); 
+                data.Add( $"{race}|{nom}|{sexe}|{pv}|{age}" );
+                // Set a variable to the Documents path.
+            }
+            string docPath =
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            // Write the string array to a new file named "WriteLines.txt".
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Poissons.txt")))
+            {
+                foreach (string line in data)
+                    outputFile.WriteLine(line);
+            }
+            data = new List<string>();
+
+            foreach (Algues algue in algues)
+            {
+                string pv = algue.Pv.ToString();
+                string age = algue.age.ToString();
+                data.Add($"{pv} |{age}");
+            }
+            // Write the string array to a new file named "WriteLines.txt".
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Algues.txt")))
+            {
+                string nmbre = data.Count.ToString();
+                data.Add(nmbre);
+                foreach (string line in data)
+                    outputFile.WriteLine(line);
+            }
+
+        }
     }
+
 
 }

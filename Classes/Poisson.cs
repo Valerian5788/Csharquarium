@@ -36,13 +36,6 @@ namespace Csharquarium.Classes
         {
             return IsMale ? "Male" : "Femelle"; // Si IsMale est vrai, retourner "Male", sinon retourner "Femelle"
         }
-
-        // Méthode pour définir la race du poisson (protected, accessible dans les classes dérivées)
-        protected void set_race(string race)
-        {
-            Race = race;
-        }
-
         public Poisson SeReproduire(Poisson homme, Poisson femme)
         {
             Noms nom = new Noms();
