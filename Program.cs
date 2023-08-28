@@ -3,6 +3,7 @@ using Csharquarium.Classes.Races;
 using System;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using System.Globalization;
 
 internal class Program
 {
