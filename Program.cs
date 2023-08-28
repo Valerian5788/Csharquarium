@@ -2,6 +2,7 @@
 using Csharquarium.Classes.Races;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 internal class Program
 {
@@ -18,7 +19,6 @@ internal class Program
         {
             showMenu = MainMenu();
         }
-        
         // Création d'un nouvel aquarium
         //Poisson p1 = new PoissonClown("Nemo", true);
         //Poisson p2 = new PoissonClown("Nema", false);
@@ -34,7 +34,7 @@ internal class Program
         //aq.AddFish(p5);
         //aq.AddFish(p6);
         //aq.AddFish(p7);
-       
+
 
         // Ajoute des algues à l'aquarium
         //aq.AddAlgues(5);
