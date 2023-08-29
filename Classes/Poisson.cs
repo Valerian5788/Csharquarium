@@ -23,6 +23,7 @@ namespace Csharquarium.Classes
         // Propriété pour stocker la race du poisson
         public string Race { get; set; }
         public Noms nom = new Noms();
+        public Couleurs couleur = new Couleurs();
 
         public Poisson() { }
         // Constructeur de la classe Poisson
@@ -54,14 +55,15 @@ namespace Csharquarium.Classes
             femme.IsOccuped = true;
             if (newPoisson.IsMale == true)
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-            } else { Console.ForegroundColor = ConsoleColor.Red; }
+                couleur.FormatCouleur("Blue");
+            } else { couleur.FormatCouleur("Red"); }
             RaiseMessageSurveillance($"Le miracle de la vie ! {homme.Name} et {femme.Name} ont eu un enfant : {name}");
             return newPoisson; // Retourner le nouveau poisson créé
         }
 
         public void Manger(Poisson repas, List<Poisson> poissons)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             // Le mérou mange un autre poisson
             RaiseMessageSurveillance($"{Name} a croqué {repas.Name}");
             repas.Pv -= 4; // Réduire les points de vie du poisson repas
@@ -74,6 +76,7 @@ namespace Csharquarium.Classes
         }
         public void Manger(Poisson poisson, Algues repas, List<Algues> algues)
         {
+            couleur.FormatCouleur("Green");
             // Le poisson mange une algue
             RaiseMessageSurveillance($"{poisson.Name} a croqué une algue.");
             repas.Pv -= 2; // Réduire les points de vie de l'algue

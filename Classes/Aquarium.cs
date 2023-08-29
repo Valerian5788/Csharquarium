@@ -17,6 +17,7 @@ namespace Csharquarium.Classes
 
         public List<Poisson> poissons = new List<Poisson>(); // Liste de poissons dans l'aquarium
         public List<Algues> algues = new List<Algues>(); // Liste d'algues dans l'aquarium
+        public Couleurs couleur = new Couleurs();
 
         // Méthode pour ajouter un poisson à l'aquarium
         public void AddFish(Poisson nouveauPoisson)
@@ -25,6 +26,7 @@ namespace Csharquarium.Classes
             poissons.Add(nouveauPoisson); // Ajoute le poisson à la liste de poissons
             nouveauPoisson.AgeSurveillance += (int age) =>
             {
+                couleur.FormatCouleur("Death");
                 OnMessage?.Invoke($"Le poisson{nouveauPoisson.Name} est mort de vieillesse");
             };
             nouveauPoisson.MessageSUrveillance += (string message) =>
@@ -66,8 +68,8 @@ namespace Csharquarium.Classes
             {
                 if (poisson.IsMale == true)
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                }else { Console.ForegroundColor = ConsoleColor.Red; }
+                    couleur.FormatCouleur("Blue");
+                }else { couleur.FormatCouleur("Red"); }
                 OnMessage?.Invoke($"{poisson.Name} de sexe {poisson.GetSexe()}, de race {poisson.Race} avec {poisson.Pv} PV est présent dans l'aquarium");
             }
 

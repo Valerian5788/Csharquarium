@@ -8,13 +8,30 @@ namespace Csharquarium.Classes
 {
     internal class Couleurs
     {
-        public void Femelle(string? value)
+        public void FormatCouleur(string couleur)
         {
-           Console.ForegroundColor = ConsoleColor.Red;
-        }
-        public void Male(string? value)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
+            switch (couleur)
+            {
+                case "Death":
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor= ConsoleColor.Red;
+                    return;
+                case "Blue":
+                    Console.ForegroundColor= ConsoleColor.Blue;
+                    return;
+                case "Yellow":
+                    Console.ForegroundColor= ConsoleColor.Yellow;
+                    return;
+                case "Green":
+                    Console.ForegroundColor=ConsoleColor.Green;
+                    return;
+                case "Red":
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    return;
+                default:
+                    Console.ForegroundColor= ConsoleColor.White;
+                    return;
+            }
         }
     }
 }
