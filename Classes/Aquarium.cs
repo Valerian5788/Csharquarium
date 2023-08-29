@@ -10,6 +10,7 @@ namespace Csharquarium.Classes
 {
     internal class Aquarium 
     {
+        private int tour = 0;
         private static Random RNG = new Random();
 
         public event Action<string> OnMessage;
@@ -20,6 +21,7 @@ namespace Csharquarium.Classes
         // Méthode pour ajouter un poisson à l'aquarium
         public void AddFish(Poisson nouveauPoisson)
         {
+            List<string> data = new List<string>();
             poissons.Add(nouveauPoisson); // Ajoute le poisson à la liste de poissons
             nouveauPoisson.AgeSurveillance += (int age) =>
             {
@@ -27,9 +29,10 @@ namespace Csharquarium.Classes
             };
             nouveauPoisson.MessageSUrveillance += (string message) =>
             {
-                OnMessage?.Invoke(message);
+                    OnMessage?.Invoke(message); 
             };
         }
+
 
         // Méthode pour ajouter des algues à l'aquarium
         public void AddAlgues(int nombreAlgues)
@@ -61,6 +64,10 @@ namespace Csharquarium.Classes
 
             foreach (Poisson poisson in poissons)
             {
+                if (poisson.IsMale == true)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }else { Console.ForegroundColor = ConsoleColor.Red; }
                 OnMessage?.Invoke($"{poisson.Name} de sexe {poisson.GetSexe()}, de race {poisson.Race} avec {poisson.Pv} PV est présent dans l'aquarium");
             }
 
@@ -70,7 +77,6 @@ namespace Csharquarium.Classes
         // Méthode pour faire passer du temps dans l'aquarium
         public void FairePasserTemps()
         {
-            int tour = 0;
             tour++;
             OnMessage?.Invoke($"Nombre de tours = {tour}");
 
@@ -78,6 +84,7 @@ namespace Csharquarium.Classes
             {
                 algue.Pv += 1;
                 algue.Reproduction = false;
+                algue.age += 1;
             }
             foreach (Poisson poisson in poissons)
             {
@@ -116,17 +123,12 @@ namespace Csharquarium.Classes
                                     if (p is IMonosexue mono)
                                     {
                                         Poisson np = p.SeReproduire(p, cible);
-                                        np.IsOccuped = true;
-                                        p.IsOccuped = true;
-                                        cible.IsOccuped = true;
                                         poissons.Add(np);
                                     }
                                     else if (p is IHermaAge hermaage)
                                     {
-                                        Poisson np = hermaage.SeReproduire(p, cible);
-                                        np.IsOccuped = true;
-                                        p.IsOccuped = true;
-                                        cible.IsOccuped = true;
+                                        Poisson np = p.SeReproduire(p, cible);
+
                                         poissons.Add(np);
                                     } 
                                 }
@@ -148,10 +150,7 @@ namespace Csharquarium.Classes
                                     {
                                         hermaopport.ChangerSexe(p);
                                     }
-                                    Poisson np = hermaopport.SeReproduire(p, cible);
-                                    np.IsOccuped = true;
-                                    p.IsOccuped = true;
-                                    cible.IsOccuped = true;
+                                    Poisson np = p.SeReproduire(p, cible);
                                     poissons.Add(np);
                                 }
                             }
@@ -183,7 +182,7 @@ namespace Csharquarium.Classes
                             if (p is IMonosexue || p is IHermaAge)
                             {
                                 List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && p.Race != cible.Race || p.Name == cible.Name || p.IsMale == cible.IsMale)
+                                while (temp.Count < poissons.Count && p.Race != cible.Race || p.Name == cible.Name || p.IsMale == cible.IsMale || cible.IsOccuped == true)
                                 {
                                     cible = poissons[RNG.Next(poissons.Count)];
                                     if (!temp.Contains(cible))
@@ -196,18 +195,12 @@ namespace Csharquarium.Classes
                                 {
                                     if (p is IMonosexue mono)
                                     {
-                                        Poisson np = mono.SeReproduire(p, cible);
-                                        np.IsOccuped = true;
-                                        p.IsOccuped = true;
-                                        cible.IsOccuped = true;
+                                        Poisson np = p.SeReproduire(p, cible);
                                         poissons.Add(np);
                                     }
                                     else if (p is IHermaAge hermaage)
                                     {
-                                        Poisson np = hermaage.SeReproduire(p, cible);
-                                        np.IsOccuped = true;
-                                        p.IsOccuped = true;
-                                        cible.IsOccuped = true;
+                                        Poisson np = p.SeReproduire(p, cible);
                                         poissons.Add(np);
                                     } 
                                 }
@@ -215,7 +208,7 @@ namespace Csharquarium.Classes
                             else if (p is IHermaOpport hermaopport)
                             {
                                 List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && (p.Race != cible.Race ||  p.Name == cible.Name))
+                                while (temp.Count < poissons.Count && (p.Race != cible.Race ||  p.Name == cible.Name || cible.IsOccuped == true))
                                 {
                                     cible = poissons[RNG.Next(poissons.Count)];
                                     if(!temp.Contains(cible))
@@ -230,9 +223,6 @@ namespace Csharquarium.Classes
                                         hermaopport.ChangerSexe(p);
                                     }
                                     Poisson np = p.SeReproduire(p, cible);
-                                    np.IsOccuped = true;
-                                    p.IsOccuped = true;
-                                    cible.IsOccuped = true;
                                     poissons.Add(np); 
                                 }
                             }                   
@@ -277,31 +267,29 @@ namespace Csharquarium.Classes
                 string sexe = poisson.GetSexe();
                 string pv = poisson.Pv.ToString();
                 string age = poisson.age.ToString(); 
-                data.Add( $"{race}|{nom}|{sexe}|{pv}|{age}" );
+                data.Add( $"{nom}|{race}|{age}|{pv}|{sexe}" );
                 // Set a variable to the Documents path.
             }
-            string docPath =
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             // Write the string array to a new file named "WriteLines.txt".
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Poissons.txt")))
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine("C:\\Users\\v.vandercamme\\Documents\\c#\\OO\\Csharquarium", "Poissons.txt")))
             {
                 foreach (string line in data)
                     outputFile.WriteLine(line);
             }
             data = new List<string>();
-
+            string nmbre = algues.Count.ToString();
+            data.Add(nmbre);
             foreach (Algues algue in algues)
             {
                 string pv = algue.Pv.ToString();
                 string age = algue.age.ToString();
-                data.Add($"{pv} |{age}");
+                
+                data.Add($"{pv} | {age}");
             }
             // Write the string array to a new file named "WriteLines.txt".
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Algues.txt")))
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine("C:\\Users\\v.vandercamme\\Documents\\c#\\OO\\Csharquarium", "Algues.txt")))
             {
-                string nmbre = data.Count.ToString();
-                data.Add(nmbre);
                 foreach (string line in data)
                     outputFile.WriteLine(line);
             }

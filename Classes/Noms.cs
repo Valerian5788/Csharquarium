@@ -11,7 +11,7 @@ namespace Csharquarium.Classes
     internal class Noms
     {
         // Liste de noms possibles pour les poissons
-        List<string> noms = new List<string>() { "Tito", "Damaged", "Venus", "Merry", "Wings", "Feline", "Beehive", "Arctic", "Enigma", "Imaginary", "Willow", "Feline", "Robin", "Cool", "Supernova", "Funny", "Halo", "Flat", "Angler", "White", "Pebble", "Plain", "Darling" };
+        List<string> noms = new List<string>() { "Tito", "Damaged", "Venus", "Merry", "Wings", "Feline", "Beehive", "Arctic", "Enigma", "Imaginary", "Willow", "Robin", "Cool", "Supernova", "Funny", "Halo", "Flat", "Angler", "White", "Pebble", "Plain", "Darling","Théodore", "Lahaye", "Auguste", "DembéléJean-Guy", "LaFromboise", "Lionel", "Gainsbourg", "Marius", "Beaubois", "Lucas", "Vigouroux", "Théodore", "Abbadie", "Armel", "Durand", "Wilfried", "Chapelle", "Augustin", "Favre" };
 
         // Liste de sexes possibles (true pour mâle, false pour femelle)
         List<bool> sexes = new List<bool>() { true, false };
@@ -20,7 +20,7 @@ namespace Csharquarium.Classes
         public string GetNom()
         {
             Random random = new Random();
-            string nom = noms[random.Next(noms.Count)]; // Sélection aléatoire d'un nom de la liste
+            string nom = noms[random.Next(noms.Count)];// Sélection aléatoire d'un nom de la liste
             noms.Remove(nom);
             return nom;
         }

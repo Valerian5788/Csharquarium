@@ -11,6 +11,7 @@ internal class Program
     private static void Main(string[] args)
     {
         aq = new Aquarium();
+        Couleurs c = new Couleurs();
         aq.OnMessage += Console.WriteLine;
         Algues algue = new Algues();
         EtresVivant vivant = new EtresVivant();
@@ -19,6 +20,7 @@ internal class Program
         while (showMenu)
         {
             showMenu = MainMenu();
+        
         }
 
         // Création d'un nouvel aquarium
@@ -60,6 +62,7 @@ internal class Program
     public static bool MainMenu()
     {
         Console.Clear();
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("Bienvenue dans votre simulation d'aquarium:");
         Console.WriteLine("1) Afficher l'état de mon aquarium");
         Console.WriteLine("2) Passer un tour");
@@ -128,32 +131,8 @@ internal class Program
                 return new Thon(name, sexe);
         }
         return new Poisson(name, sexe);
-        //if (input == "1")
-        //{
-        //    return new PoissonClown(name, sexe);
-        //}
-        //else if (input == "2")
-        //{
-        //    return new Sole(name, sexe);
-        //}
-        //else if (input == "3")
-        //{
-        //    return new Mérou(name, sexe);
-        //}
-        //else if (input == "4")
-        //{
-        //    return new Carpe(name, sexe);
-        //}
-        //else if (input == "5")
-        //{
-        //    return new Bar(name, sexe);
-        //}
-        //else if (input == "6")
-        //{
-        //    return new Thon(name, sexe);
-        //}
+     
     }
-    
 }
         // Demande à l'utilisateur de choisir trois poissons et les ajoute à l'aquarium
         /* Poisson p1 = ChoixPoisson();

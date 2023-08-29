@@ -18,10 +18,11 @@ namespace Csharquarium.Classes
         public string Name { get; set; }
 
         // Propriété en lecture seule pour indiquer si le poisson est mâle
-        public bool IsMale { get; set; }
+        public bool IsMale { get; set ; }
 
         // Propriété pour stocker la race du poisson
         public string Race { get; set; }
+        public Noms nom = new Noms();
 
         public Poisson() { }
         // Constructeur de la classe Poisson
@@ -38,17 +39,27 @@ namespace Csharquarium.Classes
         }
         public Poisson SeReproduire(Poisson homme, Poisson femme)
         {
-            Noms nom = new Noms();
             string name = nom.GetNom();
+            while(homme.Name == name || femme.Name == name)
+                {
+                    name = nom.GetNom();
+                }
             bool sexe = nom.GetSexe();
-            // Poisson newPoisson = new Carpe(name, sexe); // Créer un nouvel objet de type Carpe
             object[] parameters = new object[2];
             parameters[0] = name;
             parameters[1] = sexe;
             Poisson newPoisson = (Poisson) homme.GetType().GetConstructors().First().Invoke(parameters);
+            newPoisson.IsOccuped = true;
+            homme.IsOccuped = true;
+            femme.IsOccuped = true;
+            if (newPoisson.IsMale == true)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+            } else { Console.ForegroundColor = ConsoleColor.Red; }
             RaiseMessageSurveillance($"Le miracle de la vie ! {homme.Name} et {femme.Name} ont eu un enfant : {name}");
             return newPoisson; // Retourner le nouveau poisson créé
         }
+
         public void Manger(Poisson repas, List<Poisson> poissons)
         {
             // Le mérou mange un autre poisson
