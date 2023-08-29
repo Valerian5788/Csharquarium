@@ -37,8 +37,11 @@ namespace Csharquarium.Classes
 
 
         // Méthode pour ajouter des algues à l'aquarium
-        public void AddAlgues(int nombreAlgues)
+        public void AddAlgues()
         {
+            OnMessage?.Invoke("Combien ?");
+            int nombreAlgues;
+            int.TryParse(Console.ReadLine(), out nombreAlgues);
             for (int j = 0; j < nombreAlgues; j++)
             {
                 // Créer une nouvelle algue et l'ajouter à la liste des algues
@@ -166,9 +169,7 @@ namespace Csharquarium.Classes
                         if (algues.Count <= 0)
                         {
                             OnMessage?.Invoke("Plus aucune algue dans l'aquarium, rajoutez en svp :");
-                            string input = Console.ReadLine();
-                            int.TryParse(input, out int o);
-                            AddAlgues(o);
+                            AddAlgues();
                         }
                         p.Manger(p,repas,algues);
                     }
