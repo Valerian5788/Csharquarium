@@ -46,9 +46,9 @@ internal class Program
         subMenu1.Header = mainMenu.Header;
 
         mainMenu.SubTitle = "-------------------- Menu ----------------------";
-        mainMenu.addMenuItem(0, "Hello World!", HelloWorld);
-        mainMenu.addMenuItem(1, "Secret Menu", subMenu1.showMenu);
-        mainMenu.addMenuItem(2, "Exit", Exit);
+        mainMenu.addMenuItem(0, "Afficher l'état de mon aquarium", aq.AfficherÉtat);
+        mainMenu.addMenuItem(1, "Passer un tour", aq.FairePasserTemps);
+        mainMenu.addMenuItem(2, "Ajouter un poisson", aq.AddFish(CréationPoisson()));
         // Display the menu
         mainMenu.showMenu();
 
@@ -106,7 +106,7 @@ internal class Program
     //            aq.FairePasserTemps();
     //            return true;
     //        case "3":
-    //            aq.AddFish(CréationPoisson());
+    //          aq.AddFish(CréationPoisson());
     //            return true;
     //        case "4":
     //            Console.WriteLine("Combien ?");
