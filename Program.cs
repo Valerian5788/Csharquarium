@@ -16,11 +16,11 @@ internal class Program
         EtresVivant vivant = new EtresVivant();
         options = new List<Option>
             {
-                new Option("Afficher l'état de l'aquarium", () => aq.AfficherÉtat()),
-                new Option("Passer un tour", () =>  aq.FairePasserTemps()),
+                new Option("Afficher l'état de l'aquarium", aq.AfficherÉtat),
+                new Option("Passer un tour", aq.FairePasserTemps),
                 new Option("Ajouter un poisson", () =>  aq.AddFish(CréationPoisson())),
-                new Option("Ajouter des algues", () =>  aq.AddAlgues()),
-                new Option("Enregistrer les données", () =>  aq.EnregistrerData()),
+                new Option("Ajouter des algues", aq.AddAlgues),
+                new Option("Enregistrer les données", aq.EnregistrerData),
                 new Option("Exit", () => Environment.Exit(0)),
             };
 
@@ -45,6 +45,7 @@ internal class Program
                     WriteMenu(options, options[index]);
                 }
             }
+            // Same thing for up arrow
             if (keyinfo.Key == ConsoleKey.UpArrow)
             {
                 if (index - 1 >= 0)
@@ -58,6 +59,9 @@ internal class Program
             {
                 options[index].Selected.Invoke();
                 index = 0;
+                Console.WriteLine("Appuyez sur Enter pour continuer...");
+                do { } while (Console.ReadKey(true).Key != ConsoleKey.Enter);
+                WriteMenu(options, options[index]);
             }
         }
         while (keyinfo.Key != ConsoleKey.X);

@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using static System.Net.WebRequestMethods;
 
 namespace Csharquarium.Classes
 {
-    internal class Aquarium 
+    internal class Aquarium
     {
         private int tour = 0;
         private static Random RNG = new Random();
@@ -24,17 +25,34 @@ namespace Csharquarium.Classes
         {
             List<string> data = new List<string>();
             poissons.Add(nouveauPoisson); // Ajoute le poisson à la liste de poissons
-            nouveauPoisson.AgeSurveillance += (int age) =>
-            {
-                couleur.FormatCouleur("Death");
-                OnMessage?.Invoke($"Le poisson{nouveauPoisson.Name} est mort de vieillesse");
-            };
+            nouveauPoisson.AgeSurveillance += RaiseMessageAge;
             nouveauPoisson.MessageSUrveillance += (string message) =>
             {
-                    OnMessage?.Invoke(message); 
+                OnMessage?.Invoke(message);
             };
+            nouveauPoisson.PvSurveillance += Remove;
         }
 
+        private void Remove(EtresVivant mort)
+        {
+            if (mort is Poisson poisson)
+            {
+                poissons.Remove(poisson);
+                poisson.PvSurveillance -= Remove;
+                poisson.AgeSurveillance -= RaiseMessageAge;
+            }
+            else if (mort is Algues algue)
+            {
+                algues.Remove(algue);
+            }
+        }
+
+        private void RaiseMessageAge(EtresVivant poisson)
+        {
+            Poisson p = (Poisson)poisson;
+            couleur.FormatCouleur("Death");
+            OnMessage?.Invoke($"Le poisson {p.Name} est mort de vieillesse");
+        }
 
         // Méthode pour ajouter des algues à l'aquarium
         public void AddAlgues()
@@ -47,14 +65,15 @@ namespace Csharquarium.Classes
                 // Créer une nouvelle algue et l'ajouter à la liste des algues
                 Algues nouvelleAlgue = new Algues();
                 algues.Add(nouvelleAlgue);
-                nouvelleAlgue.PvSurveillance += (int pv) =>
+                nouvelleAlgue.PvSurveillance += (EtresVivant algue) =>
                 {
                     algues.Remove(nouvelleAlgue);
-                    OnMessage?.Invoke($"L'algue est morte, elle a {pv} PV");
+                    OnMessage?.Invoke($"L'algue est morte, elle a {algue.Pv} PV");
                 };
-                nouvelleAlgue.AgeSurveillance += (int pv) =>
+                nouvelleAlgue.AgeSurveillance += (EtresVivant algue) =>
                 {
-                    algues.Remove(nouvelleAlgue);
+                    Algues a = (Algues)algue;
+                    algues.Remove(a);
                     OnMessage?.Invoke($"Une algue à atteint l'age de 20 tours, elle meurt paisiblement");
                 };
             }
@@ -72,11 +91,10 @@ namespace Csharquarium.Classes
                 if (poisson.IsMale == true)
                 {
                     couleur.FormatCouleur("Blue");
-                }else { couleur.FormatCouleur("Red"); }
+                }
+                else { couleur.FormatCouleur("Red"); }
                 OnMessage?.Invoke($"{poisson.Name} de sexe {poisson.GetSexe()}, de race {poisson.Race} avec {poisson.Pv} PV est présent dans l'aquarium");
             }
-
-            Console.ReadKey();
         }
 
         // Méthode pour faire passer du temps dans l'aquarium
@@ -87,160 +105,78 @@ namespace Csharquarium.Classes
 
             foreach (Algues algue in algues)
             {
+                algue.age += 1;
                 algue.Pv += 1;
                 algue.Reproduction = false;
-                algue.age += 1;
             }
             foreach (Poisson poisson in poissons)
             {
-                poisson.Pv -= 1;
                 poisson.age += 1;
+                poisson.Pv -= 1;
                 if (poisson is IHermaAge hermoop && poisson.age > 10)
                 {
-                    hermoop.ChangerSexe(poisson);
+                    hermoop.ChangerSexe();
                 }
                 poisson.IsOccuped = false;
             }
-            
-            for ( int i = 0; i < poissons.Count; i++)
+
+            for (int i = 0; i < poissons.Count; i++)
             {
                 Poisson p = poissons[i];
-                if (p is IHerbivore herb && algues.Count >= 0)
+                if (p.IsOccuped == false)
                 {
+                    //reproduction
                     if (p.Pv > 5)
                     {
-                        if (p.IsOccuped == false)
+
+                        Poisson cible = p.RecherchePartenaire(poissons);
+
+                        if (cible != null)
                         {
-                            Poisson cible = poissons[RNG.Next(poissons.Count)];
-                            if (p is IMonosexue || p is IHermaAge)
-                            {
-                                List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && (p.Race != cible.Race || p.Name == cible.Name || p.IsMale == cible.IsMale || cible.IsOccuped == true))
-                                {
-                                    cible = poissons[RNG.Next(poissons.Count)];
-                                    if(!temp.Contains(cible))
-                                    {
-                                        temp.Add(cible);
-                                    }
-                                }
-                                if (temp.Count < poissons.Count)
-                                {
-                                    if (p is IMonosexue mono)
-                                    {
-                                        Poisson np = p.SeReproduire(p, cible);
-                                        poissons.Add(np);
-                                    }
-                                    else if (p is IHermaAge hermaage)
-                                    {
-                                        Poisson np = p.SeReproduire(p, cible);
 
-                                        poissons.Add(np);
-                                    } 
-                                }
-                            }
-                            else if (p is IHermaOpport hermaopport)
-                            {
-                                List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && (p.Race != cible.Race || p.Name == cible.Name || cible.IsOccuped == true))
-                                {
-                                    cible = poissons[RNG.Next(poissons.Count)];
-                                    if (!temp.Contains(cible))
-                                    {
-                                        temp.Add(cible);
-                                    }
-                                }
-                                if (temp.Count < poissons.Count)
-                                {
-                                    if (p.IsMale == cible.IsMale)
-                                    {
-                                        hermaopport.ChangerSexe(p);
-                                    }
-                                    Poisson np = p.SeReproduire(p, cible);
-                                    poissons.Add(np);
-                                }
-                            }
-
+                            Poisson np = p.SeReproduire(cible);
+                            poissons.Add(np);
                         }
 
+
                     }
+                    //se nourrir
                     else
                     {
-                        Algues repas = algues[RNG.Next(algues.Count)];
-                        if (algues.Count <= 0)
+                        if (p is IHerbivore herb && algues.Count >= 0)
                         {
-                            OnMessage?.Invoke("Plus aucune algue dans l'aquarium, rajoutez en svp :");
-                            AddAlgues();
+                            Algues repas = algues[RNG.Next(algues.Count)];
+                            if (algues.Count <= 0)
+                            {
+                                OnMessage?.Invoke("Plus aucune algue dans l'aquarium, rajoutez en svp :");
+                                AddAlgues();
+                            }
+                            p.Manger(repas);
                         }
-                        p.Manger(p,repas,algues);
-                    }
-                }
-                else if (p is ICarnivore carn)
-                {
-                    if (p.Pv > 5)
-                    {
-  
-                        if (p.IsOccuped == false)
+                        else if (p is ICarnivore carn && poissons.Count > 0)
                         {
-                        Poisson cible = poissons[RNG.Next(poissons.Count)];
-                            if (p is IMonosexue || p is IHermaAge)
-                            {
-                                List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && p.Race != cible.Race || p.Name == cible.Name || p.IsMale == cible.IsMale || cible.IsOccuped == true)
-                                {
-                                    cible = poissons[RNG.Next(poissons.Count)];
-                                    if (!temp.Contains(cible))
-                                    {
-                                        temp.Add(cible);
-                                    }
-                                }
-
-                                if (temp.Count < poissons.Count)
-                                {
-                                    if (p is IMonosexue mono)
-                                    {
-                                        Poisson np = p.SeReproduire(p, cible);
-                                        poissons.Add(np);
-                                    }
-                                    else if (p is IHermaAge hermaage)
-                                    {
-                                        Poisson np = p.SeReproduire(p, cible);
-                                        poissons.Add(np);
-                                    } 
-                                }
-                            }
-                            else if (p is IHermaOpport hermaopport)
-                            {
-                                List<Poisson> temp = new List<Poisson>();
-                                while (temp.Count < poissons.Count && (p.Race != cible.Race ||  p.Name == cible.Name || cible.IsOccuped == true))
-                                {
-                                    cible = poissons[RNG.Next(poissons.Count)];
-                                    if(!temp.Contains(cible))
-                                    {
-                                        temp.Add(cible);
-                                    }
-                                }
-                                if (temp.Count < poissons.Count)
-                                {
-                                    if (p.IsMale == cible.IsMale)
-                                    {
-                                        hermaopport.ChangerSexe(p);
-                                    }
-                                    Poisson np = p.SeReproduire(p, cible);
-                                    poissons.Add(np); 
-                                }
-                            }                   
-
-                            }
-                        }
-                    else {
+                            List<Poisson> temp = new List<Poisson>();
                             poissons.Remove(p);
                             Poisson repas = poissons[RNG.Next(poissons.Count)];
-                            while (repas.Race == p.Race)
+                            while (temp.Count < poissons.Count && repas.Race == p.Race)
                             {
+                                if (!temp.Contains(repas))
+                                {
+                                    temp.Add(repas);
+                                }
                                 repas = poissons[RNG.Next(poissons.Count)];
                             }
-                            p.Manger(repas, poissons);
-                            poissons.Add(p);                          
+                            if (temp.Count < poissons.Count)
+                            {
+                                p.Manger(repas);
+                                poissons.Add(p);
+                            }
+                            else { poissons.Add(p); }
+                        }
+                        else
+                        {
+                            OnMessage?.Invoke("Il ne reste qu'un poisson");
+                        }
                     }
                 }
 
@@ -269,8 +205,8 @@ namespace Csharquarium.Classes
                 string nom = poisson.Name;
                 string sexe = poisson.GetSexe();
                 string pv = poisson.Pv.ToString();
-                string age = poisson.age.ToString(); 
-                data.Add( $"{nom}|{race}|{age}|{pv}|{sexe}" );
+                string age = poisson.age.ToString();
+                data.Add($"{nom}|{race}|{age}|{pv}|{sexe}");
                 // Set a variable to the Documents path.
             }
 
@@ -287,7 +223,7 @@ namespace Csharquarium.Classes
             {
                 string pv = algue.Pv.ToString();
                 string age = algue.age.ToString();
-                
+
                 data.Add($"{pv} | {age}");
             }
             // Write the string array to a new file named "WriteLines.txt".

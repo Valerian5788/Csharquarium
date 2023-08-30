@@ -11,6 +11,7 @@ namespace Csharquarium.Classes
     // Déclaration de la classe Poisson qui hérite de la classe EtresVivant
     internal class Poisson : EtresVivant
     {
+        private static Random RNG= new Random();
         // Propriété pour indiquer si le poisson est occupé (utilisé pour la reproduction)
         public bool IsOccuped { get; set; }
 
@@ -38,10 +39,31 @@ namespace Csharquarium.Classes
         {
             return IsMale ? "Male" : "Femelle"; // Si IsMale est vrai, retourner "Male", sinon retourner "Femelle"
         }
-        public Poisson SeReproduire(Poisson homme, Poisson femme)
+
+        public Poisson RecherchePartenaire(List<Poisson> poissons)
         {
+            //Si il y a partenaire, remplir partenaire;
+            Poisson cible = poissons[RNG.Next(poissons.Count)];
+            List<Poisson> temp = new List<Poisson>();
+            while (temp.Count < poissons.Count && (Race != cible.Race || this == cible || (IsMale == cible.IsMale && this is IHermaOpport) || cible.IsOccuped == true))
+            {
+                if (!temp.Contains(cible))
+                {
+                    temp.Add(cible);
+                }
+                cible = poissons[RNG.Next(poissons.Count)];
+            }
+            if(temp.Count < poissons.Count) return cible;
+            return null;
+        }
+        public Poisson SeReproduire(Poisson partenaire)
+        {
+            if (IsMale == partenaire.IsMale && this is IHermaOpport herma)
+            {
+                herma.ChangerSexe();
+            }
             string name = nom.GetNom();
-            while(homme.Name == name || femme.Name == name)
+            while(Name == name || partenaire.Name == name)
                 {
                     name = nom.GetNom();
                 }
@@ -49,19 +71,19 @@ namespace Csharquarium.Classes
             object[] parameters = new object[2];
             parameters[0] = name;
             parameters[1] = sexe;
-            Poisson newPoisson = (Poisson) homme.GetType().GetConstructors().First().Invoke(parameters);
+            Poisson newPoisson = (Poisson) GetType().GetConstructors().First().Invoke(parameters);
             newPoisson.IsOccuped = true;
-            homme.IsOccuped = true;
-            femme.IsOccuped = true;
+            IsOccuped = true;
+            partenaire.IsOccuped = true;
             if (newPoisson.IsMale == true)
             {
                 couleur.FormatCouleur("Blue");
             } else { couleur.FormatCouleur("Red"); }
-            RaiseMessageSurveillance($"Le miracle de la vie ! {homme.Name} et {femme.Name} ont eu un enfant : {name}");
+            RaiseMessageSurveillance($"Le miracle de la vie ! {Name} et {partenaire.Name} ont eu un enfant : {name}");
             return newPoisson; // Retourner le nouveau poisson créé
         }
 
-        public void Manger(Poisson repas, List<Poisson> poissons)
+        public void Manger(Poisson repas)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             // Le mérou mange un autre poisson
@@ -70,30 +92,16 @@ namespace Csharquarium.Classes
             Pv += 4; // Augmenter les points de vie du mérou
             if (repas.Pv <= 0)
             {
-                poissons.Remove(repas);
                 RaiseMessageSurveillance($"{repas.Name} à été mangé. RIP.");
             }
         }
-        public void Manger(Poisson poisson, Algues repas, List<Algues> algues)
+        public void Manger(Algues repas)
         {
             couleur.FormatCouleur("Green");
             // Le poisson mange une algue
-            RaiseMessageSurveillance($"{poisson.Name} a croqué une algue.");
+            RaiseMessageSurveillance($"{Name} a croqué une algue.");
             repas.Pv -= 2; // Réduire les points de vie de l'algue
             Pv += 3; // Augmenter les points de vie du poisson
-        }
-        // Méthode pour changer le sexe du poisson
-        public void ChangerSexe(Poisson poisson)
-        {
-            // Inversion simple du sexe
-            if (poisson.IsMale)
-            {
-                poisson.IsMale = false;
-            }
-            else
-            {
-                poisson.IsMale = true;
-            }
         }
     }
 }

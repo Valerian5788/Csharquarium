@@ -28,7 +28,10 @@ namespace Csharquarium.Classes
                 case "Red":
                     Console.ForegroundColor = ConsoleColor.Red;
                     return;
-                default:
+                case "White":
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return;
+                default :
                     Console.ForegroundColor= ConsoleColor.White;
                     return;
             }

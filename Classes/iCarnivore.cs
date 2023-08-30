@@ -9,7 +9,7 @@ namespace Csharquarium.Classes
 {
     internal interface ICarnivore
     {
-        void Manger(Poisson repas, List<Poisson> poissons);
+        void Manger(Poisson repas);
     }
 
 }

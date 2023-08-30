@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Csharquarium.Classes
 {
-    internal interface IMonosexue
+    internal interface IHerma
     {
+        void ChangerSexe();
     }
-
 }

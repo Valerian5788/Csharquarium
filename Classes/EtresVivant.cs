@@ -2,8 +2,8 @@
 {
     internal class EtresVivant
     {
-        public event Action<int> AgeSurveillance;
-        public event Action<int> PvSurveillance;
+        public event Action<EtresVivant> AgeSurveillance;
+        public event Action<EtresVivant> PvSurveillance;
         public event Action<string> MessageSUrveillance;
 
         private int _pv = 10;
@@ -15,7 +15,7 @@
                 _pv = value;
                 if (_pv <= 0)
                 {
-                    PvSurveillance?.Invoke(_pv);
+                    PvSurveillance?.Invoke(this);
                 }
             }
         }
@@ -26,7 +26,10 @@
             set
             {
                 _age = value;
-                if (age >= 20) { AgeSurveillance?.Invoke(_age); }
+                if (age >= 20) { 
+                    AgeSurveillance?.Invoke(this);
+                    Pv = 0;
+                }
             }
         }
         protected void RaiseMessageSurveillance(string message)

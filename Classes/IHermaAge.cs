@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Csharquarium.Classes
 {
-    internal interface IHermaAge
+    internal interface IHermaAge : IHerma
     {
-        Poisson SeReproduire(Poisson homme, Poisson femme);
-        void ChangerSexe(Poisson poisson);
     }
 
 }

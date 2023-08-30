@@ -11,7 +11,7 @@ namespace Csharquarium.Classes
     internal interface IHerbivore
     {
         // Interface for herbivores to define their eating behavior
-        void Manger(Poisson poisson,Algues repas, List<Algues> algues);
+        void Manger(Algues repas);
     }
 
 }

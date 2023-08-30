@@ -16,5 +16,11 @@ namespace Csharquarium.Classes.Races
             IsOccuped = false;
             // Aucune autre initialisation requise pour le moment
         }
+        // Méthode pour changer le sexe du poisson
+        public void ChangerSexe()
+        {
+            // Inversion simple du sexe
+            IsMale = !IsMale;
+        }
     }
 }
