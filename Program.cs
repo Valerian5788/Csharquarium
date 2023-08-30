@@ -14,14 +14,6 @@ internal class Program
         aq.OnMessage += Console.WriteLine;
         Algues algue = new Algues();
         EtresVivant vivant = new EtresVivant();
-
-        //bool showMenu = true;
-        //while (showMenu)
-        //{
-        //    showMenu = MainMenu();
-
-        //}
-        // Create options that you want your menu to have
         options = new List<Option>
             {
                 new Option("Afficher l'état de l'aquarium", () => aq.AfficherÉtat()),
@@ -137,82 +129,6 @@ public class Option
         Selected = selected;
     }
 }
-
-
-
-
-// Création d'un nouvel aquarium
-//Poisson p1 = new PoissonClown("Nemo", true);
-//Poisson p2 = new PoissonClown("Nema", false);
-//Poisson p3 = new Sole("Neme", false);
-//Poisson p4 = new Carpe("Nemu", true);
-//Poisson p5 = new Mérou("Nemi", false);
-//Poisson p6 = new Thon("Nemlo", true);
-//Poisson p7 = new Sole("Nemfe", true);
-//aq.AddFish(p1);
-//aq.AddFish(p2);
-//aq.AddFish(p3);
-//aq.AddFish(p4);
-//aq.AddFish(p5);
-//aq.AddFish(p6);
-//aq.AddFish(p7);
-
-//    public static bool MainMenu()
-//    {
-//        Console.Clear();
-//        Console.ForegroundColor = ConsoleColor.White;
-//        Console.WriteLine("Bienvenue dans votre simulation d'aquarium:");
-//        Console.WriteLine("1) Afficher l'état de mon aquarium");
-//        Console.WriteLine("2) Passer un tour");
-//        Console.WriteLine("3) Ajouter un poisson");
-//        Console.WriteLine("4) Ajouter une algues");
-//        Console.WriteLine("5) Enregistrer les données");
-//        Console.WriteLine("6) Exit");
-//        Console.Write("\r\nchoisissez une option: ");
-//        //string input = Console.ReadLine();
-//        //int.TryParse(input, out int i);
-//        //if (input == 1)
-//        //{
-
-//        //}
-//        switch (Console.ReadLine())
-//        {
-//            case "1":
-//                aq.AfficherÉtat();
-//                return true;
-//            case "2":
-//                aq.FairePasserTemps();
-//                return true;
-//            case "3":
-//                aq.AddFish(CréationPoisson());
-//                return true;
-//            case "4":
-//                Console.WriteLine("Combien ?");
-//                string input = Console.ReadLine();
-//                int.TryParse(input, out int result);
-//                aq.AddAlgues(result);
-//                return true;
-//            case "5":
-//                aq.EnregistrerData();
-//                return true;
-//            case "6":
-//                return false;
-//            default:
-//                return true;
-//        }
-//    }
-
-//}
-// Demande à l'utilisateur de choisir trois poissons et les ajoute à l'aquarium
-/* Poisson p1 = ChoixPoisson();
- Poisson p2 = ChoixPoisson();
- Poisson p3 = ChoixPoisson();
- Poisson p4 = ChoixPoisson();
- Poisson p5 = ChoixPoisson();
- Poisson p6 = ChoixPoisson();
- Poisson p7 = ChoixPoisson();
- Poisson p8 = ChoixPoisson();
- Poisson p9 = ChoixPoisson();*/
 
 
 

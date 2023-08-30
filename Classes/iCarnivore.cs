@@ -9,9 +9,6 @@ namespace Csharquarium.Classes
 {
     internal interface ICarnivore
     {
-        // Interface for carnivorous species to define their eating behavior
-
-        // Method for carnivorous species to eat other fish
         void Manger(Poisson repas, List<Poisson> poissons);
     }
 

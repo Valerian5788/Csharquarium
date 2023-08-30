@@ -14,7 +14,6 @@ namespace Csharquarium.Classes.Races
         {
             Race = "Carpe";
             IsOccuped = false;
-            // Aucune autre initialisation requise pour le moment
         }
     }
 }

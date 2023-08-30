@@ -14,10 +14,7 @@ namespace Csharquarium.Classes.Races
         {
             Race = "Thon";
             IsOccuped = false;
-            // Aucune autre initialisation requise pour le moment
         }
-
-        // Implémentation de la méthode Manger de l'interface ICarnivore
     }
 
 }

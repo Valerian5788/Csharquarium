@@ -14,7 +14,6 @@ namespace Csharquarium.Classes.Races
         {
             Race = "Sole";
             IsOccuped = false;
-            // Aucune autre initialisation requise pour le moment
         }
     }
 }

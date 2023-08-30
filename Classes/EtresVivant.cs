@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Csharquarium.Classes
+﻿namespace Csharquarium.Classes
 {
     internal class EtresVivant
     {
@@ -13,17 +7,17 @@ namespace Csharquarium.Classes
         public event Action<string> MessageSUrveillance;
 
         private int _pv = 10;
-        public int Pv 
-        { 
-            get { return _pv; } 
-            set 
+        public int Pv
+        {
+            get { return _pv; }
+            set
             {
                 _pv = value;
-                if(_pv <= 0)
+                if (_pv <= 0)
                 {
                     PvSurveillance?.Invoke(_pv);
                 }
-            } 
+            }
         }
         private int _age = 0;
         public int age
